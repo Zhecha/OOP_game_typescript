@@ -1,0 +1,25 @@
+.wrapper-queue {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  background-color: transparent;
+  color: #444;
+}
+
+.box-queue {
+  position: relative;
+  background-color: #444;
+  color: red;
+  height: 58px;
+}
+
+.box-queue-img {
+  height: 100%;
+}
+
+.box-queue-text {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 100%;
+}

@@ -1,0 +1,39 @@
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  background-color: transparent;
+  color: #444;
+}
+
+.box {
+  position: relative;
+  background-color: #444;
+  color: red;
+  height: 70px;
+}
+
+.box-img {
+  height: 100%;
+}
+
+.box-text {
+  position: absolute;
+  bottom: 50px;
+  left: 45px;
+  width: 100%;
+}
+
+.box-hp {
+  position: absolute;
+  top: 50px;
+  right: 35px;
+  width: 100%;
+}
+
+.box-active-hero {
+  position: absolute;
+  bottom: 50px;
+  right: 70px;
+  color: green;
+}

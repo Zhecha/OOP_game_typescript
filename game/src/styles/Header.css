@@ -1,0 +1,146 @@
+.rivets:before,
+.rivets:after,
+.seal,
+.type {
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+
+.seal,
+.seal:before,
+.type {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.logo {
+  background: #000;
+  -moz-border-radius: 1.5em;
+  -webkit-border-radius: 1.5em;
+  border-radius: 1.5em;
+  color: red;
+  margin: 2em auto;
+  position: relative;
+  width: 7em;
+  height: 7em;
+  z-index: 1;
+}
+.logo:before {
+  background: #000;
+  -moz-border-radius: 1.5em;
+  -webkit-border-radius: 1.5em;
+  border-radius: 1.5em;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+  width: 7em;
+  height: 7em;
+  z-index: -1;
+}
+.logo:after {
+  background: #000;
+  -moz-border-radius: 1.5em;
+  -webkit-border-radius: 1.5em;
+  border-radius: 1.5em;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  -moz-transform: rotate(-30deg);
+  -ms-transform: rotate(-30deg);
+  -webkit-transform: rotate(-30deg);
+  transform: rotate(-30deg);
+  width: 7em;
+  height: 7em;
+  z-index: -2;
+}
+
+.rivets {
+  width: 7em;
+  height: 7em;
+}
+.rivets:before,
+.rivets:after {
+  content: " ";
+  background: #000;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.25em;
+  width: 0.5em;
+  height: 0.5em;
+}
+.rivets:before {
+  left: -0.75em;
+}
+.rivets:after {
+  right: -0.75em;
+}
+
+.seal {
+  background: #000;
+  margin-top: -3.5em;
+  margin-left: -3.5em;
+  width: 7em;
+  height: 7em;
+}
+.seal:before {
+  background: red
+    url("http://stash.rachelnabors.com/codepen/badge/brillant_trans.png") 50%
+    50%;
+  content: "";
+  margin-top: -1.25em;
+  margin-left: -5.25em;
+  z-index: -1;
+  width: 10.5em;
+  height: 0;
+  border: 1.25em solid transparent;
+  border-left: 0.625em solid transparent;
+  border-right: 0.625em solid transparent;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background-origin: border-box;
+}
+
+.type {
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -moz-transform: rotate(-30deg);
+  -ms-transform: rotate(-30deg);
+  -webkit-transform: rotate(-30deg);
+  transform: rotate(-30deg);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: transparent
+    url("http://stash.rachelnabors.com/codepen/badge/brillant_trans.png") 50%
+    50%;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  padding-top: 1em;
+  margin-top: -3em;
+  margin-left: -3em;
+  width: 6em;
+  height: 6em;
+}
+.type h1 {
+  font-size: 1.5em;
+  font-weight: 900;
+  margin: 10px 0 0 0;
+}
+.type em {
+  display: block;
+  font-size: 0.75em;
+  font-style: italic;
+  font-weight: 300;
+}
