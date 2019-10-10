@@ -6,10 +6,10 @@ import Warrior from "./warrior";
 
 export type HeroesTypes = "Mage" | "Warrior" | "Archer" | "Healer";
 
-type UnitTypes = Archer | Mage | Healer | Warrior;
+export type UnitTypes = Archer | Mage | Healer | Warrior;
 
 export default class UnitFactory {
-  static getInstance(type: HeroesTypes): UnitTypes {
+  static getInstance(type: string): UnitTypes {
     switch (type) {
       case "Mage":
         return new Mage("Mage", 150, 75, "Mage", false);
@@ -18,7 +18,9 @@ export default class UnitFactory {
       case "Archer":
         return new Archer("Archer", 200, 50, "Archer", false);
       case "Healer":
-        return new Healer("Healer", 100, 0, "Healer", false);
+        return new Healer("Healer", 100, 50, "Healer", false);
+      default: 
+        return new Warrior("Warrior", 300, 100, "Warrior", false);
     }
   }
 }

@@ -2,34 +2,84 @@ import React from "react";
 import GridItemProps from "../interface/GridItem";
 import "../styles/Grid.css";
 import { AppStore } from "../redux/rootReducer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Targets from '../heroes/Services/Targets';
+import AttackingTargets from '../heroes/Services/AttackingTargets';
+import HealTargets from '../heroes/Services/HealTargets';
+import DeathTargets from '../heroes/Services/DeathTargets';
+import {updateQueue} from '../redux/actions/QueueWalkingAction';
 
 type Props = GridItemProps;
 
 const GridItem: React.FC<Props> = props => {
-  const hero = useSelector((state: AppStore) => state.queue.queue)
-    .filter(hero => hero.id === props.id && hero.active)
-    .pop();
-  !hero ? (props.unit.active = false) : (props.unit.active = true);
+  let dispatch = useDispatch();
+  const hero = useSelector((state: AppStore) => state.queue.queue)[0];
+  hero.id === props.id ? (props.unit.setActive(true)) : (props.unit.setActive(false));
 
   let gameGrid = useSelector((state: AppStore) => state.gameGrid.gameGrid);
 
-  const userAttack = () => {
-    let teamA = gameGrid.slice(0, 6);
+  const userLogic = () => {
+    let teamA = gameGrid.slice(0,6);
     let teamB = gameGrid.slice(6);
-  };
+    if(props.teamA === hero.teamA){
+      if(hero.type === 'Healer'){
+        if(hero.teamA){
+          if(!DeathTargets.isDeath(props.id, teamA)){
+            let healedTeam = Targets.createTargets(hero.type, teamA, props.id);
+            HealTargets.healingTargets(healedTeam);
+            dispatch(updateQueue());
+          } else {
+            alert("Unit is death. Choose different.")
+          }
+        } else {
+          if(!DeathTargets.isDeath(props.id, teamB)){
+            let healedTeam = Targets.createTargets(hero.type, teamB, props.id);
+            HealTargets.healingTargets(healedTeam);
+            dispatch(updateQueue());
+          } else {
+            alert("Unit is death. Choose different.")
+          }
+        }
+      } else {
+        alert("You can't attack yourself.")
+      }
+    } else {
+      if(hero.type !== 'Healer'){
+        if(hero.teamA) {
+          if(!DeathTargets.isDeath(props.id, teamB)){
+            let attackedTeam = Targets.createTargets(hero.type, teamB, props.id);
+            AttackingTargets.attackTargets(hero.type, attackedTeam);
+            dispatch(updateQueue());
+          } else {
+            alert("Unit is death. Choose different.")
+          }
+        } else {
+          if(!DeathTargets.isDeath(props.id, teamA)){
+            let attackedTeam = Targets.createTargets(hero.type, teamA, props.id);
+            AttackingTargets.attackTargets(hero.type, attackedTeam);
+            dispatch(updateQueue());
+          } else {
+            alert("Unit is death. Choose different.")
+          }
+        }
+      } else {
+        alert("You can't heal unit from another team.")
+      }
+    }
+
+  }
   return (
     <>
       <img
         src={props.PhotoUrl}
         className="box-img"
         alt="HeroObject"
-        onClick={() => userAttack()}
+        onClick={() => userLogic()}
       />
       <div className="box-text">{props.teamA ? "A" : "B"}</div>
       <div className="box-hp">{props.unit.getHp() + "hp"}</div>
       <div className="box-active-hero">
-        {props.unit.active ? "Active" : null}
+        {props.unit.getActive() ? "Active" : null}
       </div>
     </>
   );

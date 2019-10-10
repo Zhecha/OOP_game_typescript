@@ -4,6 +4,7 @@ export default abstract class Unit {
   damage: number;
   type: string;
   active: boolean;
+  fullHp: number;
 
   constructor(
     name: string,
@@ -17,5 +18,6 @@ export default abstract class Unit {
     this.damage = damage;
     this.type = type;
     this.active = active;
+    this.fullHp = hp;
   }
 }

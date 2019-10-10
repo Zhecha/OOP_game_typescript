@@ -1,5 +1,6 @@
 import {
-  QUEUE_ACTIONS,
+  GET_NEW_QUEUE,
+  UPDATE_QUEUE,
   QueueState,
   QueueActionsTypes,
   QueueObjectType
@@ -116,8 +117,10 @@ export default function(
   action: QueueActionsTypes
 ): QueueState {
   switch (action.type) {
-    case QUEUE_ACTIONS.GET_NEW_QUEUE:
+    case GET_NEW_QUEUE:
       return getNewQueue(state.queue);
+    case UPDATE_QUEUE: 
+      return updateQueue(state.queue);
     default:
       return state;
   }
@@ -141,4 +144,11 @@ function getNewQueue(queue: Array<QueueObjectType>): QueueState {
   array[0].active = true;
 
   return { queue: array };
+}
+
+function updateQueue(queue: Array<QueueObjectType>): QueueState {
+  let array = [...queue];
+  array.shift();
+  array[0].active = true;
+  return { queue: array};
 }

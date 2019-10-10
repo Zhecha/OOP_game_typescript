@@ -35,4 +35,8 @@ export default class Warrior extends Unit implements IUnit {
   setActive(active: boolean) {
     this.active = active;
   }
+
+  getFullHp() {
+    return this.fullHp;
+  }
 }

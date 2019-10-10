@@ -20,6 +20,10 @@ export default class Mage extends Unit implements IUnit {
     this.hp = hp;
   }
 
+  getFullHp() {
+    return this.fullHp;
+  }
+
   getDamage(): number {
     return this.damage;
   }

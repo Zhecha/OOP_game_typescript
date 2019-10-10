@@ -1,10 +1,5 @@
-export const QUEUE_ACTIONS = {
-  GET_NEW_QUEUE: "GET_NEW_QUEUE"
-};
-
-interface GetNewQueueAction {
-  type: typeof QUEUE_ACTIONS.GET_NEW_QUEUE;
-}
+export const GET_NEW_QUEUE = "GET_NEW_QUEUE";
+export const UPDATE_QUEUE = "UPDATE_QUEUE";
 
 export interface QueueObjectType {
   id: number;
@@ -19,4 +14,4 @@ export interface QueueState {
   queue: Array<QueueObjectType>;
 }
 
-export type QueueActionsTypes = GetNewQueueAction;
+export type QueueActionsTypes = | {type: "GET_NEW_QUEUE"} | {type: "UPDATE_QUEUE"};

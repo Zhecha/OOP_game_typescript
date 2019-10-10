@@ -5,4 +5,5 @@ export default interface IUnit {
   setDamage(damage: number): void;
   getActive(): boolean;
   setActive(active: boolean): void;
+  getFullHp(): void;
 }
