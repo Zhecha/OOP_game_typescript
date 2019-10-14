@@ -9,6 +9,7 @@ export default class AttackingTargets {
         for(let i = 0; i < lastHp.length; i++){
             attackedTeam[i].unit.setHp(lastHp[i]);
         }
-        return attackedTeam;
+        let result = attackedTeam.filter((unit) => unit.unit.getHp() === 0);
+        return result;
     }
 }

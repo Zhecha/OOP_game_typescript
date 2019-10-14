@@ -24,18 +24,18 @@ const GridItem: React.FC<Props> = props => {
     if(props.teamA === hero.teamA){
       if(hero.type === 'Healer'){
         if(hero.teamA){
-          if(!DeathTargets.isDeath(props.id, teamA)){
+          if(!DeathTargets.isDeathHero(props.id, teamA)){
             let healedTeam = Targets.createTargets(hero.type, teamA, props.id);
             HealTargets.healingTargets(healedTeam);
-            dispatch(updateQueue());
+            dispatch(updateQueue([]));
           } else {
             alert("Unit is death. Choose different.")
           }
         } else {
-          if(!DeathTargets.isDeath(props.id, teamB)){
+          if(!DeathTargets.isDeathHero(props.id, teamB)){
             let healedTeam = Targets.createTargets(hero.type, teamB, props.id);
             HealTargets.healingTargets(healedTeam);
-            dispatch(updateQueue());
+            dispatch(updateQueue([]));
           } else {
             alert("Unit is death. Choose different.")
           }
@@ -46,18 +46,18 @@ const GridItem: React.FC<Props> = props => {
     } else {
       if(hero.type !== 'Healer'){
         if(hero.teamA) {
-          if(!DeathTargets.isDeath(props.id, teamB)){
+          if(!DeathTargets.isDeathHero(props.id, teamB)){
             let attackedTeam = Targets.createTargets(hero.type, teamB, props.id);
-            AttackingTargets.attackTargets(hero.type, attackedTeam);
-            dispatch(updateQueue());
+            let deathHeroes = AttackingTargets.attackTargets(hero.type, attackedTeam);
+            dispatch(updateQueue(deathHeroes));
           } else {
             alert("Unit is death. Choose different.")
           }
         } else {
-          if(!DeathTargets.isDeath(props.id, teamA)){
+          if(!DeathTargets.isDeathHero(props.id, teamA)){
             let attackedTeam = Targets.createTargets(hero.type, teamA, props.id);
-            AttackingTargets.attackTargets(hero.type, attackedTeam);
-            dispatch(updateQueue());
+            let deathHeroes = AttackingTargets.attackTargets(hero.type, attackedTeam);
+            dispatch(updateQueue(deathHeroes));
           } else {
             alert("Unit is death. Choose different.")
           }

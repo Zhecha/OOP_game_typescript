@@ -10,6 +10,5 @@ export default class HealTargets {
         for(let i = 0; i < lastHp.length; i++){
             healedTeam[i].unit.setHp(lastHp[i]);
         }
-        return healedTeam;
     }
 }

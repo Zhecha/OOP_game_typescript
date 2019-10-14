@@ -5,6 +5,7 @@ import {
   QueueActionsTypes,
   QueueObjectType
 } from "../constants/QueueWalkingConstants";
+import {UnitGameGridObjectType} from '../constants/GameGridConstants';
 
 import DrowRanger from "../../images/Drow_Ranger_icon.png";
 import Skeletonking from "../../images/Skeleton_King_icon.png";
@@ -109,7 +110,9 @@ const initialState: QueueState = {
       type: "Archer",
       active: false
     }
-  ]
+  ],
+  newQueue: [],
+  round: 0
 };
 
 export default function(
@@ -118,16 +121,21 @@ export default function(
 ): QueueState {
   switch (action.type) {
     case GET_NEW_QUEUE:
-      return getNewQueue(state.queue);
+      return getNewQueue(state);
     case UPDATE_QUEUE: 
-      return updateQueue(state.queue);
+      return updateQueue(state, action.payload);
     default:
       return state;
   }
 }
 
-function getNewQueue(queue: Array<QueueObjectType>): QueueState {
-  let array = [...queue];
+function getNewQueue(state: QueueState): QueueState {
+  let array: Array<QueueObjectType>;
+  if(state.queue.length){
+    array = [...state.queue];
+  } else {
+    array = [...state.newQueue];
+  }
   let currentIndex = array.length,
     temporaryValue = undefined,
     randomIndex = undefined;
@@ -143,12 +151,25 @@ function getNewQueue(queue: Array<QueueObjectType>): QueueState {
 
   array[0].active = true;
 
-  return { queue: array };
+  return { queue: array, newQueue: array , round: 0};
 }
 
-function updateQueue(queue: Array<QueueObjectType>): QueueState {
-  let array = [...queue];
+function updateQueue(state: QueueState, payload: UnitGameGridObjectType[]): QueueState {
+  let array = [...state.queue];
+  if(payload.length) {
+    let indexArr = payload.map((hero) => {
+      return array.findIndex((unit) => unit.id === hero.id);
+    });
+    indexArr.forEach((value) => array.splice(value, 1));
+    indexArr.forEach((value) => state.newQueue.splice(value, 1));
+  }
   array.shift();
-  array[0].active = true;
-  return { queue: array};
+  if(!array.length){
+    let round = state.round;
+    ++round;
+    return {...state, queue: state.newQueue, round: round };
+  } else {
+    array[0].active = true;
+    return { ...state, queue: array};
+  }
 }
