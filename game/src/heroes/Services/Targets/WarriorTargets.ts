@@ -10,7 +10,8 @@ export default class WarriorTargets {
   ) {
     let firstLine: UnitGameGridObjectType[] = [];
     let secondLine: UnitGameGridObjectType[] = [];
-    let positions = [];
+    let constPositions = [0, 1, 2];
+    let positions: number[] = [];
     let isAttack: boolean;
     if (attackedTeamType === "teamA") {
       firstLine = attackedTeam.slice(3);
@@ -27,53 +28,51 @@ export default class WarriorTargets {
     let attackPositions = positions.map(value => {
       if (value < 3 && value > -1) {
         return value;
-      } else {
+      }
+    });
+    constPositions.forEach(value => {
+      if (!positions.includes(value)) {
         notAttackPositions.push(value);
-        return;
       }
     });
     if (isAttack) {
       if (!DeathTargets.isDeathTeam(firstLine)) {
-        let result: any = [];
+        let result: UnitGameGridObjectType[] = [];
         attackPositions.map((value: any) => {
           if (value !== undefined) {
-            if (
-              (firstLine[value].id === attackedId &&
-                !DeathTargets.isDeathHero(attackedId, firstLine)) ||
-              !DeathTargets.isDeathHero(firstLine[value].id, firstLine)
-            ) {
-              result.push(firstLine[value]);
-            }
+            result.push(firstLine[value]);
           }
         });
-        if (result.length) {
+        if (result.some(unit => unit.id === attackedId)) {
           return result;
         } else {
-          notAttackPositions.map((value: any) => {
-            result.push(firstLine[value]);
-          });
-          return result;
+          if (result.some(unit => !DeathTargets.isDeathHero(unit.id, result))) {
+            return [];
+          } else {
+            return firstLine.slice(
+              notAttackPositions[0],
+              notAttackPositions[0] + 1
+            );
+          }
         }
       } else {
-        let result: any = [];
+        let result: UnitGameGridObjectType[] = [];
         attackPositions.map((value: any) => {
           if (value !== undefined) {
-            if (
-              (secondLine[value].id === attackedId &&
-                !DeathTargets.isDeathHero(attackedId, secondLine)) ||
-              !DeathTargets.isDeathHero(secondLine[value].id, secondLine)
-            ) {
-              result.push(secondLine[value]);
-            }
+            result.push(secondLine[value]);
           }
         });
-        if (result.length) {
+        if (result.some(unit => unit.id === attackedId)) {
           return result;
         } else {
-          notAttackPositions.map((value: any) => {
-            result.push(secondLine[value]);
-          });
-          return result;
+          if (result.some(unit => !DeathTargets.isDeathHero(unit.id, result))) {
+            return [];
+          } else {
+            return secondLine.slice(
+              notAttackPositions[0],
+              notAttackPositions[0] + 1
+            );
+          }
         }
       }
     } else {

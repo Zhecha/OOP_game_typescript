@@ -72,11 +72,17 @@ const GridItem: React.FC<Props> = props => {
               position,
               "teamB"
             );
-            let deathHeroes = AttackingTargets.attackTargets(
-              hero.type,
-              attackedTeam
-            );
-            dispatch(updateQueue(deathHeroes));
+            if (attackedTeam.length) {
+              let deathHeroes = AttackingTargets.attackTargets(
+                hero.type,
+                attackedTeam
+              );
+              dispatch(updateQueue(deathHeroes));
+            } else {
+              if (DeathTargets.isDeathTeam(teamA.slice(3))) {
+              }
+              alert("choose different unit for attack.");
+            }
           } else {
             alert("Unit is death. Choose different.");
           }
@@ -90,11 +96,15 @@ const GridItem: React.FC<Props> = props => {
               position,
               "teamA"
             );
-            let deathHeroes = AttackingTargets.attackTargets(
-              hero.type,
-              attackedTeam
-            );
-            dispatch(updateQueue(deathHeroes));
+            if (attackedTeam.length) {
+              let deathHeroes = AttackingTargets.attackTargets(
+                hero.type,
+                attackedTeam
+              );
+              dispatch(updateQueue(deathHeroes));
+            } else {
+              alert("choose different unit for attack.");
+            }
           } else {
             alert("Unit is death. Choose different.");
           }

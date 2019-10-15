@@ -161,11 +161,18 @@ function updateQueue(
   let array = [...state.queue];
   let tempArr = [...state.newQueue];
   if (payload.length) {
-    let indexArr = payload.map(hero => {
-      return array.findIndex(unit => unit.id === hero.id);
+    let index: number = 0;
+    let index1: number = 0;
+    payload.map(hero => {
+      index = array.findIndex(unit => unit.id === hero.id);
+      if (index !== -1) {
+        array.splice(index, 1);
+      }
+      index1 = tempArr.findIndex(unit => unit.id === hero.id);
+      if (index1 !== -1) {
+        tempArr.splice(index1, 1);
+      }
     });
-    indexArr.forEach(value => array.splice(value, 1));
-    indexArr.forEach(value => tempArr.splice(value, 1));
   }
   array.shift();
   if (!array.length) {

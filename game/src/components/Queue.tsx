@@ -10,7 +10,6 @@ const Queue: React.FC = () => {
   useEffect(() => {
     dispatch(getNewQueue());
   }, []);
-  console.log(queue);
   return (
     <div className="wrapper-queue">
       {queue.map(hero => (

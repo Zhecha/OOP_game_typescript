@@ -20,7 +20,12 @@ export default class Targets {
       case "Healer":
         return HealerTargets.createTargets(attackedTeam, attackedId);
       case "Warrior":
-        return WarriorTargets.createTargets(attackedTeam, attackedId, position, attackedTeamType);
+        return WarriorTargets.createTargets(
+          attackedTeam,
+          attackedId,
+          position,
+          attackedTeamType
+        );
       default:
         return [];
     }
