@@ -2,16 +2,6 @@ import Unit from "./unit";
 import IUnit from "../IServices/IUnit";
 
 export default class Archer extends Unit implements IUnit {
-  constructor(
-    name: string,
-    hp: number,
-    damage: number,
-    type: string,
-    active: boolean
-  ) {
-    super(name, hp, damage, type, active);
-  }
-
   getHp(): number {
     return this.hp;
   }

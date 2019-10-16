@@ -64,7 +64,12 @@ const GridItem: React.FC<Props> = props => {
       if (hero.type !== "Healer") {
         if (hero.teamA) {
           if (!DeathTargets.isDeathHero(props.id, teamB)) {
-            let position = AttackerPosition.getPosition(teamA, hero.id);
+            let position: number = 0;
+            if (DeathTargets.isDeathTeam(teamA.slice(3))) {
+              position = AttackerPosition.getPosition(teamA, hero.id) + 3;
+            } else {
+              position = AttackerPosition.getPosition(teamA, hero.id);
+            }
             let attackedTeam = Targets.createTargets(
               hero.type,
               teamB,
@@ -72,23 +77,30 @@ const GridItem: React.FC<Props> = props => {
               position,
               "teamB"
             );
-            if (attackedTeam.length) {
+            if (attackedTeam.length && attackedTeam.length !== teamB.length) {
               let deathHeroes = AttackingTargets.attackTargets(
                 hero.type,
                 attackedTeam
               );
               dispatch(updateQueue(deathHeroes));
             } else {
-              if (DeathTargets.isDeathTeam(teamA.slice(3))) {
+              if (!attackedTeam.length) {
+                alert("choose different unit for attack.");
+              } else {
+                dispatch(updateQueue([]));
               }
-              alert("choose different unit for attack.");
             }
           } else {
             alert("Unit is death. Choose different.");
           }
         } else {
           if (!DeathTargets.isDeathHero(props.id, teamA)) {
-            let position = AttackerPosition.getPosition(teamB, hero.id);
+            let position: number = 0;
+            if (DeathTargets.isDeathTeam(teamB.slice(0, 3))) {
+              position = AttackerPosition.getPosition(teamB, hero.id) - 3;
+            } else {
+              position = AttackerPosition.getPosition(teamB, hero.id);
+            }
             let attackedTeam = Targets.createTargets(
               hero.type,
               teamA,
@@ -96,14 +108,18 @@ const GridItem: React.FC<Props> = props => {
               position,
               "teamA"
             );
-            if (attackedTeam.length) {
+            if (attackedTeam.length && attackedTeam.length !== teamA.length) {
               let deathHeroes = AttackingTargets.attackTargets(
                 hero.type,
                 attackedTeam
               );
               dispatch(updateQueue(deathHeroes));
             } else {
-              alert("choose different unit for attack.");
+              if (!attackedTeam.length) {
+                alert("choose different unit for attack.");
+              } else {
+                dispatch(updateQueue([]));
+              }
             }
           } else {
             alert("Unit is death. Choose different.");
@@ -112,6 +128,12 @@ const GridItem: React.FC<Props> = props => {
       } else {
         alert("You can't heal unit from another team.");
       }
+    }
+    if (DeathTargets.isDeathTeam(teamA)) {
+      alert("TeamB wins game");
+    }
+    if (DeathTargets.isDeathTeam(teamB)) {
+      alert("TeamA wins game");
     }
   };
   return (

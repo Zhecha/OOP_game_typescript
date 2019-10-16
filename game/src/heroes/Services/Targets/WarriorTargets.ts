@@ -49,10 +49,18 @@ export default class WarriorTargets {
           if (result.some(unit => !DeathTargets.isDeathHero(unit.id, result))) {
             return [];
           } else {
-            return firstLine.slice(
+            let obj: UnitGameGridObjectType = firstLine.slice(
               notAttackPositions[0],
               notAttackPositions[0] + 1
-            );
+            )[0];
+            if (obj.id === attackedId) {
+              return firstLine.slice(
+                notAttackPositions[0],
+                notAttackPositions[0] + 1
+              );
+            } else {
+              return [];
+            }
           }
         }
       } else {
@@ -68,15 +76,23 @@ export default class WarriorTargets {
           if (result.some(unit => !DeathTargets.isDeathHero(unit.id, result))) {
             return [];
           } else {
-            return secondLine.slice(
+            let obj: UnitGameGridObjectType = secondLine.slice(
               notAttackPositions[0],
               notAttackPositions[0] + 1
-            );
+            )[0];
+            if (obj.id === attackedId) {
+              return secondLine.slice(
+                notAttackPositions[0],
+                notAttackPositions[0] + 1
+              );
+            } else {
+              return [];
+            }
           }
         }
       }
     } else {
-      return [];
+      return attackedTeam;
     }
   }
 }

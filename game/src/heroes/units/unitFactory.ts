@@ -1,4 +1,3 @@
-import Unit from "./unit";
 import Mage from "./mage";
 import Archer from "./archer";
 import Healer from "./healer";
