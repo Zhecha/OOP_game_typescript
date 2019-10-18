@@ -3,6 +3,7 @@ import ArcherTargets from "./Targets/ArcherTargets";
 import HealerTargets from "./Targets/HealerTargets";
 import WarriorTargets from "./Targets/WarriorTargets";
 import { UnitGameGridObjectType } from "../../redux/constants/GameGridConstants";
+import Unit from "../units/unit";
 
 export default class Targets {
   static createTargets(
