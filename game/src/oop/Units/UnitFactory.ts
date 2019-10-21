@@ -2,9 +2,10 @@ import Archer from "./Archer";
 import Mage from "./Mage";
 import Healer from "./Healer";
 import Warrior from "./Warrior";
+import Unit from "./Unit";
 
 class UnitFactory {
-  createInstance(id: number, type: string) {
+  createInstance(id: number, type: string): Unit {
     switch (type) {
       case "Archer":
         return new Archer(id);
@@ -13,6 +14,8 @@ class UnitFactory {
       case "Healer":
         return new Healer(id);
       case "Warrior":
+        return new Warrior(id);
+      default:
         return new Warrior(id);
     }
   }
