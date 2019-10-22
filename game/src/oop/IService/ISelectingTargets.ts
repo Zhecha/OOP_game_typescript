@@ -8,9 +8,9 @@ export interface ISelectingAttackTargets {
     attacked: IFields,
     attackedId: number,
     attackerId: number
-  ): Unit[];
+  ): IFields;
 }
 
 export interface ISelectingHealTargets {
-  getHealTargets(healed: IFields, healedId: number): Unit[];
+  getHealTargets(healed: IFields, healedId: number): IFields;
 }

@@ -6,5 +6,5 @@ export interface IHp {
   getFullHp(): number;
   setHp(hp: number): void;
   getHp(): number;
-  setFullHp(hp: number): void;
+  isDeath(): boolean;
 }

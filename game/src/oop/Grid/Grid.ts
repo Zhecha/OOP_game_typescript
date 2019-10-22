@@ -8,10 +8,12 @@ let units = ["Warrior", "Archer", "Mage", "Healer", "Archer", "Warrior"];
 
 class Grid implements IGrid {
   fields: IFields;
+  team: string;
 
-  constructor() {
+  constructor(team: string) {
     let randomizedUnits = this.randomizeGrid(units);
     this.fields = this.createGrid(randomizedUnits);
+    this.team = team;
   }
 
   private randomizeGrid(units: Array<string>) {
@@ -45,6 +47,32 @@ class Grid implements IGrid {
   getGrid(): IFields {
     return this.fields;
   }
+
+  getUnitById(id: number): Unit {
+    let unit: Unit[] = [];
+
+    this.fields.forEach(elem => {
+      elem.forEach(value => {
+        if (value.getId() === id) {
+          unit.push(value);
+        }
+      });
+    });
+
+    return unit[0];
+  }
+
+  isAllUnitsDeath(): boolean {
+    let fields: IFields = [[], []];
+
+    this.fields.forEach((elem, index) => {
+      elem.forEach(value => {
+        if (!value.unitHp.isDeath()) {
+          fields[index].push(value);
+        }
+      });
+    });
+  }
 }
 
-export const Fields = new Grid();
+export default Grid;

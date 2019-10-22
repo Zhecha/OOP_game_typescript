@@ -13,15 +13,21 @@ export default class Hp implements IHp {
     return this.fullHp;
   }
 
-  setFullHp(hp: number) {
-    this.fullHp = hp;
-  }
-
   setHp(hp: number) {
-    this.currentHp = hp;
+    if (hp <= 0) {
+      this.currentHp = 0;
+    } else if (hp >= this.fullHp) {
+      this.currentHp = this.fullHp;
+    } else {
+      this.currentHp = hp;
+    }
   }
 
   getHp(): number {
     return this.currentHp;
+  }
+
+  isDeath(): boolean {
+    return this.currentHp === 0 ? true : false;
   }
 }
