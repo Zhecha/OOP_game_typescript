@@ -33,7 +33,9 @@
 
 .box-active-hero {
   position: absolute;
-  bottom: 50px;
-  right: 70px;
-  color: green;
+  bottom: 45px;
+  right: 65px;
+  color: lawngreen;
+  border: white solid 2px;
+  border-radius: 50%;
 }

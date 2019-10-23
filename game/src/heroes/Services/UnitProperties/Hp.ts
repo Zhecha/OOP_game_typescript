@@ -1,4 +1,4 @@
-import { IHp } from "../../IService/IHp";
+import { IHp } from "../../IServices/IHp";
 
 export default class Hp implements IHp {
   private currentHp: number;

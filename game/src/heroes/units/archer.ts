@@ -1,32 +1,20 @@
 import Unit from "./unit";
-import IUnit from "../IServices/IUnit";
+import { UnitsInfo } from "../UnitInfoConfig";
+import { ISelectingAttackTargets } from "../IServices/ISelectingTargets";
+import { IAttackTargets } from "../IServices/IAttackTargets";
+import RangeSelectingTargets from "../Services/SelectingTargets/RangeSelectingTargets";
+import SingleAttackTargets from "../Services/AttackTargets/SingleAttackTargets";
 
-export default class Archer extends Unit implements IUnit {
-  getHp(): number {
-    return this.hp;
-  }
+const hp = UnitsInfo.Archer.hp;
+const damage = UnitsInfo.Archer.damage;
 
-  setHp(hp: number) {
-    this.hp = hp;
-  }
+export default class Archer extends Unit {
+  selectingTargets: ISelectingAttackTargets;
+  attackingTargets: IAttackTargets;
 
-  getDamage(): number {
-    return this.damage;
-  }
-
-  setDamage(damage: number) {
-    this.damage = damage;
-  }
-
-  getActive(): boolean {
-    return this.active;
-  }
-
-  setActive(active: boolean) {
-    this.active = active;
-  }
-
-  getFullHp() {
-    return this.fullHp;
+  constructor(id: number) {
+    super(id, hp, damage, "Archer");
+    this.selectingTargets = new RangeSelectingTargets();
+    this.attackingTargets = new SingleAttackTargets();
   }
 }

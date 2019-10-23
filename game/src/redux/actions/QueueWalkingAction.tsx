@@ -3,7 +3,7 @@ import {
   GET_NEW_QUEUE,
   QueueActionsTypes
 } from "../constants/QueueWalkingConstants";
-import {UnitGameGridObjectType} from '../constants/GameGridConstants';
+import { UnitGameGridObjectType } from "../constants/GameGridConstants";
 
 export const getNewQueue = (): QueueActionsTypes => {
   return {
@@ -11,9 +11,11 @@ export const getNewQueue = (): QueueActionsTypes => {
   };
 };
 
-export const updateQueue = (array: UnitGameGridObjectType[] ) : QueueActionsTypes => {
+export const updateQueue = (
+  array: UnitGameGridObjectType[]
+): QueueActionsTypes => {
   return {
     type: UPDATE_QUEUE,
     payload: array
-  }
-}
+  };
+};

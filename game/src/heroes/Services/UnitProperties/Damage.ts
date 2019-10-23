@@ -1,4 +1,4 @@
-import { IDamage } from "../../IService/IDamage";
+import { IDamage } from "../../IServices/IDamage";
 
 export default class Damage implements IDamage {
   private damage: number;

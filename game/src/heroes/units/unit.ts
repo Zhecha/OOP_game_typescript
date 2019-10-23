@@ -1,23 +1,36 @@
-export default abstract class Unit {
-  name: string;
-  hp: number;
-  damage: number;
+import { IWrapperHp, IHp } from "../IServices/IHp";
+import { IWrapperDamage, IDamage } from "../IServices/IDamage";
+import Hp from "../../heroes/Services/UnitProperties/Hp";
+import Damage from "../../heroes/Services/UnitProperties/Damage";
+
+export default class Unit implements IWrapperDamage, IWrapperHp {
+  id: number;
+  unitHp: IHp;
+  unitDamage: IDamage;
   type: string;
   active: boolean;
-  fullHp: number;
 
-  constructor(
-    name: string,
-    hp: number,
-    damage: number,
-    type: string,
-    active: boolean
-  ) {
-    this.name = name;
-    this.hp = hp;
-    this.damage = damage;
+  constructor(id: number, hp: number, damage: number, type: string) {
+    this.id = id;
     this.type = type;
+    this.unitHp = new Hp(hp);
+    this.unitDamage = new Damage(damage);
+    this.active = false;
+  }
+
+  getId(): number {
+    return this.id;
+  }
+
+  setId(id: number) {
+    this.id = id;
+  }
+
+  setActive(active: boolean) {
     this.active = active;
-    this.fullHp = hp;
+  }
+
+  getActive(): boolean {
+    return this.active;
   }
 }

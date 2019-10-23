@@ -1,32 +1,20 @@
 import Unit from "./unit";
-import IUnit from "../IServices/IUnit";
+import { UnitsInfo } from "../../heroes/UnitInfoConfig";
+import { ISelectingAttackTargets } from "../IServices/ISelectingTargets";
+import { IAttackTargets } from "../../heroes/IServices/IAttackTargets";
+import RangeSelectingTargets from "../Services/SelectingTargets/RangeSelectingTargets";
+import MassAttackTargets from "../../heroes/Services/AttackTargets/MassAttackTargets";
 
-export default class Mage extends Unit implements IUnit {
-  getHp(): number {
-    return this.hp;
-  }
+const hp = UnitsInfo.Mage.hp;
+const damage = UnitsInfo.Mage.damage;
 
-  setHp(hp: number) {
-    this.hp = hp;
-  }
+export default class Mage extends Unit {
+  selectingTargets: ISelectingAttackTargets;
+  attackingTargets: IAttackTargets;
 
-  getFullHp() {
-    return this.fullHp;
-  }
-
-  getDamage(): number {
-    return this.damage;
-  }
-
-  setDamage(damage: number) {
-    this.damage = damage;
-  }
-
-  getActive(): boolean {
-    return this.active;
-  }
-
-  setActive(active: boolean) {
-    this.active = active;
+  constructor(id: number) {
+    super(id, hp, damage, "Mage");
+    this.selectingTargets = new RangeSelectingTargets();
+    this.attackingTargets = new MassAttackTargets();
   }
 }

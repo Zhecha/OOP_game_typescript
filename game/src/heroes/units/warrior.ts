@@ -1,32 +1,20 @@
 import Unit from "./unit";
-import IUnit from "../IServices/IUnit";
+import { UnitsInfo } from "../../heroes/UnitInfoConfig";
+import { ISelectingAttackTargets } from "../IServices/ISelectingTargets";
+import { IAttackTargets } from "../../heroes/IServices/IAttackTargets";
+import MeleeSelectingTargets from "../Services/SelectingTargets/MeleeSelectingTargets";
+import MassAttackTargets from "../../heroes/Services/AttackTargets/MassAttackTargets";
 
-export default class Warrior extends Unit implements IUnit {
-  getHp(): number {
-    return this.hp;
-  }
+const hp = UnitsInfo.Warrior.hp;
+const damage = UnitsInfo.Warrior.damage;
 
-  setHp(hp: number) {
-    this.hp = hp;
-  }
+export default class Warrior extends Unit {
+  selectingTargets: ISelectingAttackTargets;
+  attackingTargets: IAttackTargets;
 
-  getDamage(): number {
-    return this.damage;
-  }
-
-  setDamage(damage: number) {
-    this.damage = damage;
-  }
-
-  getActive(): boolean {
-    return this.active;
-  }
-
-  setActive(active: boolean) {
-    this.active = active;
-  }
-
-  getFullHp() {
-    return this.fullHp;
+  constructor(id: number) {
+    super(id, hp, damage, "Warrior");
+    this.selectingTargets = new MeleeSelectingTargets();
+    this.attackingTargets = new MassAttackTargets();
   }
 }

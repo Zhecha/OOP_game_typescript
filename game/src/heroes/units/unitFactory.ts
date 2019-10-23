@@ -1,25 +1,24 @@
-import Mage from "./mage";
 import Archer from "./archer";
+import Mage from "./mage";
 import Healer from "./healer";
 import Warrior from "./warrior";
+import Unit from "./unit";
 
-export type HeroesTypes = "Mage" | "Warrior" | "Archer" | "Healer";
-
-export type UnitTypes = Archer | Mage | Healer | Warrior;
-
-export default class UnitFactory {
-  static getInstance(type: string): UnitTypes {
+class UnitFactory {
+  createInstance(id: number, type: string): Unit {
     switch (type) {
-      case "Mage":
-        return new Mage("Mage", 150, 75, "Mage", false);
-      case "Warrior":
-        return new Warrior("Warrior", 300, 100, "Warrior", false);
       case "Archer":
-        return new Archer("Archer", 200, 50, "Archer", false);
+        return new Archer(id);
+      case "Mage":
+        return new Mage(id);
       case "Healer":
-        return new Healer("Healer", 100, 50, "Healer", false);
-      default: 
-        return new Warrior("Warrior", 300, 100, "Warrior", false);
+        return new Healer(id);
+      case "Warrior":
+        return new Warrior(id);
+      default:
+        return new Warrior(id);
     }
   }
 }
+
+export const Units = new UnitFactory();
