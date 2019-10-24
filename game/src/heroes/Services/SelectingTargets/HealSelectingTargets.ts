@@ -1,14 +1,16 @@
-import { ISelectingHealTargets } from "../../IServices/ISelectingTargets";
+import { ISelectingTargets } from "../../IServices/ISelectingTargets";
 import { UnitGameGridObjectType } from "../../../redux/constants/GameGridConstants";
 
-export default class HealSelectingTargets implements ISelectingHealTargets {
-  getHealTargets(
-    healed: UnitGameGridObjectType[],
-    healedId: number
+export default class HealSelectingTargets implements ISelectingTargets {
+  getAttackTargets(
+    attacker: UnitGameGridObjectType[],
+    attacked: UnitGameGridObjectType[],
+    attackedId: number,
+    attackerId: number
   ): UnitGameGridObjectType[] {
     let fields: UnitGameGridObjectType[] = [];
 
-    healed.forEach(elem => {
+    attacker.forEach(elem => {
       if (!elem.unit.unitHp.isDeath()) {
         fields.push(elem);
       }

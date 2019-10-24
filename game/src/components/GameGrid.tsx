@@ -13,7 +13,6 @@ const GameGrid: React.FC = () => {
   let gameGrid = useSelector((state: AppStore) => state.gameGrid.gameGrid);
   let teamA = gameGrid.slice(0, 6);
   let teamB = gameGrid.slice(6);
-  console.log(teamA, teamB);
   return (
     <div className="grid-container">
       <div className="grid-content">

@@ -2,6 +2,7 @@ import { IWrapperHp, IHp } from "../IServices/IHp";
 import { IWrapperDamage, IDamage } from "../IServices/IDamage";
 import Hp from "../../heroes/Services/UnitProperties/Hp";
 import Damage from "../../heroes/Services/UnitProperties/Damage";
+import { UnitGameGridObjectType } from "../../redux/constants/GameGridConstants";
 
 export default class Unit implements IWrapperDamage, IWrapperHp {
   id: number;

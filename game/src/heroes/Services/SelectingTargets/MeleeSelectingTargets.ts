@@ -1,7 +1,7 @@
-import { ISelectingAttackTargets } from "../../IServices/ISelectingTargets";
+import { ISelectingTargets } from "../../IServices/ISelectingTargets";
 import { UnitGameGridObjectType } from "../../../redux/constants/GameGridConstants";
 
-export default class MeleeSelectingTargets implements ISelectingAttackTargets {
+export default class MeleeSelectingTargets implements ISelectingTargets {
   getAttackTargets(
     attacker: UnitGameGridObjectType[],
     attacked: UnitGameGridObjectType[],

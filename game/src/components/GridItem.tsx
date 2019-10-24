@@ -16,7 +16,23 @@ const GridItem: React.FC<Props> = props => {
 
   let gameGrid = useSelector((state: AppStore) => state.gameGrid.gameGrid);
 
-  const userLogic = () => {};
+  const userLogic = () => {
+    let teamA = gameGrid.slice(0, 6);
+    let teamB = gameGrid.slice(6);
+    if (hero.type !== "Healer") {
+      if (hero.teamA) {
+        let targets = hero.unit.targets.getAttackTargets(
+          teamA,
+          teamB,
+          props.id,
+          hero.id
+        );
+        console.log(targets);
+      } else {
+      }
+    } else {
+    }
+  };
   return (
     <>
       <img

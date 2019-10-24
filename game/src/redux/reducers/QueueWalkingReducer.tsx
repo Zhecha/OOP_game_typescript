@@ -6,6 +6,7 @@ import {
   QueueObjectType
 } from "../constants/QueueWalkingConstants";
 import { UnitGameGridObjectType } from "../constants/GameGridConstants";
+import { Units } from "../../heroes/units/unitFactory";
 
 import DrowRanger from "../../images/Drow_Ranger_icon.png";
 import Skeletonking from "../../images/Skeleton_King_icon.png";
@@ -20,7 +21,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Warrior",
-      active: false
+      active: false,
+      unit: Units.createInstance(1, "Warrior")
     },
     {
       id: 2,
@@ -28,7 +30,8 @@ const initialState: QueueState = {
       teamB: true,
       teamA: false,
       type: "Warrior",
-      active: false
+      active: false,
+      unit: Units.createInstance(2, "Warrior")
     },
     {
       id: 3,
@@ -36,7 +39,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Archer",
-      active: false
+      active: false,
+      unit: Units.createInstance(3, "Archer")
     },
     {
       id: 4,
@@ -44,7 +48,8 @@ const initialState: QueueState = {
       teamB: true,
       teamA: false,
       type: "Archer",
-      active: false
+      active: false,
+      unit: Units.createInstance(4, "Archer")
     },
     {
       id: 5,
@@ -52,7 +57,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Healer",
-      active: false
+      active: false,
+      unit: Units.createInstance(5, "Healer")
     },
     {
       id: 6,
@@ -60,7 +66,8 @@ const initialState: QueueState = {
       teamB: true,
       teamA: false,
       type: "Healer",
-      active: false
+      active: false,
+      unit: Units.createInstance(6, "Healer")
     },
     {
       id: 7,
@@ -68,7 +75,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Mage",
-      active: false
+      active: false,
+      unit: Units.createInstance(7, "Mage")
     },
     {
       id: 8,
@@ -76,7 +84,8 @@ const initialState: QueueState = {
       teamB: true,
       teamA: false,
       type: "Mage",
-      active: false
+      active: false,
+      unit: Units.createInstance(8, "Mage")
     },
     {
       id: 9,
@@ -84,7 +93,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Warrior",
-      active: false
+      active: false,
+      unit: Units.createInstance(9, "Warrior")
     },
     {
       id: 10,
@@ -92,7 +102,8 @@ const initialState: QueueState = {
       teamB: true,
       teamA: false,
       type: "Warrior",
-      active: false
+      active: false,
+      unit: Units.createInstance(10, "Warrior")
     },
     {
       id: 11,
@@ -100,7 +111,8 @@ const initialState: QueueState = {
       teamA: true,
       teamB: false,
       type: "Archer",
-      active: false
+      active: false,
+      unit: Units.createInstance(11, "Archer")
     },
     {
       id: 12,
@@ -108,7 +120,8 @@ const initialState: QueueState = {
       teamA: false,
       teamB: true,
       type: "Archer",
-      active: false
+      active: false,
+      unit: Units.createInstance(12, "Archer")
     }
   ],
   newQueue: [],
