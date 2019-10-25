@@ -16,9 +16,9 @@ const GameGrid: React.FC = () => {
   return (
     <div className="grid-container">
       <div className="grid-content">
-        <Grid grid={teamA} />
+        <Grid healed={teamA} attacked={teamB} />
         <hr className="grid-center-line" />
-        <Grid grid={teamB} />
+        <Grid healed={teamB} attacked={teamA} />
       </div>
     </div>
   );

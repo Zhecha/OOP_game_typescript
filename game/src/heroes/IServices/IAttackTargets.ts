@@ -8,11 +8,3 @@ export interface IAttackTargets {
     attacker: Unit
   ): UnitGameGridObjectType[];
 }
-
-export interface IHealTargets {
-  healDamage(
-    healed: UnitGameGridObjectType[],
-    healedId: number,
-    healer: Unit
-  ): void;
-}

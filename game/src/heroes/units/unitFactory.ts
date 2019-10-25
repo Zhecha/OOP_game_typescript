@@ -5,7 +5,7 @@ import Warrior from "./warrior";
 import Unit from "./unit";
 
 class UnitFactory {
-  createInstance(id: number, type: string): Mage | Warrior | Healer | Archer {
+  createInstance(id: number, type: string): Unit {
     switch (type) {
       case "Archer":
         return new Archer(id);

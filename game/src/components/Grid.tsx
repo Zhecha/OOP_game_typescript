@@ -7,8 +7,11 @@ import GridItem from "./GridItem";
 type Props = GridProps;
 
 const Grid: React.FC<Props> = props => {
-  const renderTeamGrid = (team: Array<UnitGameGridObjectType>) => {
-    let resultArr = team.map((heroObj: UnitGameGridObjectType) => {
+  const renderTeamGrid = (
+    attacked: Array<UnitGameGridObjectType>,
+    healed: Array<UnitGameGridObjectType>
+  ) => {
+    let resultArr = healed.map((heroObj: UnitGameGridObjectType) => {
       return (
         <div className="box a" key={heroObj.id}>
           <GridItem
@@ -16,6 +19,8 @@ const Grid: React.FC<Props> = props => {
             teamA={heroObj.teamA}
             unit={heroObj.unit}
             id={heroObj.id}
+            attacked={attacked}
+            healed={healed}
           />
         </div>
       );
@@ -24,7 +29,11 @@ const Grid: React.FC<Props> = props => {
     return <>{resultArr}</>;
   };
 
-  return <div className="wrapper">{renderTeamGrid(props.grid)}</div>;
+  return (
+    <div className="wrapper">
+      {renderTeamGrid(props.attacked, props.healed)}
+    </div>
+  );
 };
 
 export default Grid;

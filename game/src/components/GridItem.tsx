@@ -14,23 +14,32 @@ const GridItem: React.FC<Props> = props => {
     ? props.unit.setActive(true)
     : props.unit.setActive(false);
 
-  let gameGrid = useSelector((state: AppStore) => state.gameGrid.gameGrid);
-
   const userLogic = () => {
-    let teamA = gameGrid.slice(0, 6);
-    let teamB = gameGrid.slice(6);
-    if (hero.type !== "Healer") {
-      if (hero.teamA) {
-        let targets = hero.unit.targets.getAttackTargets(
-          teamA,
-          teamB,
+    let isMyTeam = props.healed.some(unit => unit.id === hero.id);
+    if (isMyTeam) {
+      if (hero.unit.getType() === "Healer") {
+        let targets = hero.unit.getTargetsForAttack(
+          props.healed,
+          props.attacked,
           props.id,
           hero.id
         );
-        console.log(targets);
+        console.log("Healed", targets);
       } else {
+        alert("You can't attack your team!");
       }
     } else {
+      if (hero.unit.getType() !== "Healer") {
+        let targets = hero.unit.getTargetsForAttack(
+          props.attacked,
+          props.healed,
+          props.id,
+          hero.id
+        );
+        console.log("Attacked", targets);
+      } else {
+        alert("You can't healed another team!");
+      }
     }
   };
   return (
