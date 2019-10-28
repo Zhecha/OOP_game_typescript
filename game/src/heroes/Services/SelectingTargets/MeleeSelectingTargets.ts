@@ -28,9 +28,32 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
 
   private getAttackerPosition(
     attacker: UnitGameGridObjectType[],
-    attackerId: number
+    attackerId: number,
+    attackedId: number
   ): number {
-    return attacker.findIndex(hero => hero.unit.getId() === attackerId);
+    if(attackedId % 2 !== 0) {
+      return attacker.findIndex(hero => hero.unit.getId() === attackerId);
+    } else {
+      let line1 = attacker.slice(3).concat(attacker.slice(0, 3));
+      return line1.findIndex(hero => hero.unit.getId() === attackerId);
+    }
+  }
+
+  private isFistLineAlive(attacker: UnitGameGridObjectType[], attackerId: number): boolean {
+    if (attackerId % 2 !== 0) {
+      let line = attacker.slice(3).concat(attacker.slice(0, 3));
+      let line1 = line.slice(0, 3);
+      if (line1.some(hero => !hero.unit.unitHp.isDeath())) {
+        return true;
+      }
+      return false;
+    } else {
+      let line1 = attacker.slice(0, 3);
+      if (line1.some(hero => !hero.unit.unitHp.isDeath())) {
+        return true;
+      } 
+      return false;
+    }
   }
 
   getAttackTargets(
@@ -39,21 +62,13 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
     attackedId: number,
     attackerId: number
   ): UnitGameGridObjectType[] {
-    let attackedLine: UnitGameGridObjectType[] = [];
-    let position: number = 0;
-    if (attackedId % 2 !== 0) {
-      attackedLine = this.getLineToAttack(attacked, attackedId);
-      position = this.getAttackerPosition(attacker, attackerId);
-    } else {
-      let line1 = attacker.slice(3).concat(attacker.slice(0, 3));
-      attackedLine = this.getLineToAttack(attacked, attackedId);
-      position = this.getAttackerPosition(line1, attackerId);
+    let attackedLine = this.getLineToAttack(attacked, attackedId);
+    let position = this.getAttackerPosition(attacker, attackerId, attackedId);
+    const isFirstLineAlive = this.isFistLineAlive(attacker, attackerId);
+    if(!isFirstLineAlive){
+      position = position % 3;
     }
-    console.log(attackedLine);
-    if (
-      attackedLine.some(hero => hero.unit.getId() === attackedId) &&
-      position < 3
-    ) {
+    if (attackedLine.some(hero => hero.unit.getId() === attackedId) && position < 3) {
       if (attackedLine[0].unit.getId() === attackedId) {
         return [attackedLine[0], attackedLine[1]];
       }
