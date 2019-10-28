@@ -36,7 +36,11 @@ const GridItem: React.FC<Props> = props => {
           props.id,
           hero.id
         );
-        console.log("Attacked", targets);
+        if (targets.length) {
+          console.log("Attacked", targets);
+        } else {
+          alert("You can't attack");
+        }
       } else {
         alert("You can't healed another team!");
       }
