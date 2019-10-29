@@ -24,7 +24,12 @@ const GridItem: React.FC<Props> = props => {
           props.id,
           hero.id
         );
-        console.log("Healed", targets);
+        let healed = hero.unit.attackTargets(targets, props.id, hero.unit);
+        //if (healed.length) {
+        dispatch(updateQueue(healed));
+        //} else {
+        //  alert("You can't heal dead unit");
+        //}
       } else {
         alert("You can't attack your team!");
       }
@@ -37,9 +42,16 @@ const GridItem: React.FC<Props> = props => {
           hero.id
         );
         if (targets.length) {
-          console.log("Attacked", targets);
+          console.log(targets);
+          let attacked = hero.unit.attackTargets(targets, props.id, hero.unit);
+          //  if (attacked.length) {
+          dispatch(updateQueue(attacked));
+          // } else {
+          //   alert("You can't attack dead unit");
+          //}
         } else {
           alert("You can't attack");
+          dispatch(updateQueue([]));
         }
       } else {
         alert("You can't healed another team!");

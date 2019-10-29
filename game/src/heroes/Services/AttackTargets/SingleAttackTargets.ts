@@ -9,6 +9,9 @@ export default class SingleAttackTargets implements IAttackTargets {
     attackedId: number,
     attacker: Unit
   ) {
+    // if (attacked.every(hero => hero.unit.getId() !== attackedId)) {
+    //   return [];
+    // }
     attacked.forEach(elem => {
       if (elem.unit.getId() === attackedId) {
         elem.unit.unitHp.setHp(

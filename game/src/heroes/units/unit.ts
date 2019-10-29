@@ -65,4 +65,12 @@ export default class Unit implements IWrapperDamage, IWrapperHp {
       attackerId
     );
   }
+
+  attackTargets(
+    attacked: UnitGameGridObjectType[],
+    attackedId: number,
+    attacker: Unit
+  ): UnitGameGridObjectType[] {
+    return this.attack.dealDamage(attacked, attackedId, attacker);
+  }
 }

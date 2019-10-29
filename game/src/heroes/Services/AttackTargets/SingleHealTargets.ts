@@ -9,6 +9,10 @@ export default class SingleHealTargets implements IAttackTargets {
     attackedId: number,
     attacker: Unit
   ): UnitGameGridObjectType[] {
+    // if (attacked.every(hero => hero.unit.getId() !== attackedId)) {
+    //   return [];
+    // }
+
     attacked.forEach(elem => {
       if (elem.unit.getId() === attackedId) {
         elem.unit.unitHp.setHp(

@@ -8,11 +8,22 @@ export default class MassAttackTargets implements IAttackTargets {
     attackedId: number,
     attacker: Unit
   ) {
-    attacked.forEach(unit =>
-      unit.unit.unitHp.setHp(
-        unit.unit.unitHp.getHp() - attacker.unitDamage.getDamage()
-      )
-    );
-    return attacked.filter(hero => hero.unit.unitHp.isDeath());
+    // if (attacked.every(hero => hero.unit.getId() !== attackedId)) {
+    //   return [];
+    // }
+
+    attacked.forEach(unit => {
+      if (unit !== undefined) {
+        unit.unit.unitHp.setHp(
+          unit.unit.unitHp.getHp() - attacker.unitDamage.getDamage()
+        );
+      }
+    });
+
+    return attacked.filter(hero => {
+      if (hero !== undefined) {
+        return hero.unit.unitHp.isDeath();
+      }
+    });
   }
 }

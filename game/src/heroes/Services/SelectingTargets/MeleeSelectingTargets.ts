@@ -31,7 +31,7 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
     attackerId: number,
     attackedId: number
   ): number {
-    if(attackedId % 2 !== 0) {
+    if (attackedId % 2 !== 0) {
       return attacker.findIndex(hero => hero.unit.getId() === attackerId);
     } else {
       let line1 = attacker.slice(3).concat(attacker.slice(0, 3));
@@ -39,7 +39,10 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
     }
   }
 
-  private isFistLineAlive(attacker: UnitGameGridObjectType[], attackerId: number): boolean {
+  private isFistLineAlive(
+    attacker: UnitGameGridObjectType[],
+    attackerId: number
+  ): boolean {
     if (attackerId % 2 !== 0) {
       let line = attacker.slice(3).concat(attacker.slice(0, 3));
       let line1 = line.slice(0, 3);
@@ -51,7 +54,7 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
       let line1 = attacker.slice(0, 3);
       if (line1.some(hero => !hero.unit.unitHp.isDeath())) {
         return true;
-      } 
+      }
       return false;
     }
   }
@@ -65,17 +68,40 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
     let attackedLine = this.getLineToAttack(attacked, attackedId);
     let position = this.getAttackerPosition(attacker, attackerId, attackedId);
     const isFirstLineAlive = this.isFistLineAlive(attacker, attackerId);
-    if(!isFirstLineAlive){
+    if (!isFirstLineAlive) {
       position = position % 3;
     }
-    if (attackedLine.some(hero => hero.unit.getId() === attackedId) && position < 3) {
-      if (attackedLine[0].unit.getId() === attackedId) {
-        return [attackedLine[0], attackedLine[1]];
+    if (
+      attackedLine.some(hero => hero.unit.getId() === attackedId) &&
+      position < 3
+    ) {
+      if (
+        position === 0 &&
+        (attackedLine[0].unit.getId() === attackedId ||
+          attackedLine[1].unit.getId() === attackedId)
+      ) {
+        return [attackedLine[0], attackedLine[1]].filter(
+          hero => !hero.unit.unitHp.isDeath()
+        );
       }
-      if (attackedLine[2].unit.getId() === attackedId) {
-        return [attackedLine[1], attackedLine[2]];
+      if (
+        position === 2 &&
+        (attackedLine[2].unit.getId() === attackedId ||
+          attackedLine[1].unit.getId() === attackedId)
+      ) {
+        return [attackedLine[1], attackedLine[2]].filter(
+          hero => !hero.unit.unitHp.isDeath()
+        );
       }
-      return attackedLine;
+      if (
+        position === 1 &&
+        (attackedLine[2].unit.getId() === attackedId ||
+          attackedLine[1].unit.getId() === attackedId ||
+          attackedLine[0].unit.getId() === attackedId)
+      ) {
+        return attackedLine.filter(hero => !hero.unit.unitHp.isDeath());
+      }
+      return [];
     } else {
       return [];
     }
