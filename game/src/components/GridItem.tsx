@@ -18,41 +18,38 @@ const GridItem: React.FC<Props> = props => {
     let isMyTeam = props.healed.some(unit => unit.id === hero.id);
     if (isMyTeam) {
       if (hero.unit.getType() === "Healer") {
-        let targets = hero.unit.getTargetsForAttack(
-          props.healed,
-          props.attacked,
-          props.id,
-          hero.id
-        );
-        let healed = hero.unit.attackTargets(targets, props.id, hero.unit);
-        //if (healed.length) {
-        dispatch(updateQueue(healed));
-        //} else {
-        //  alert("You can't heal dead unit");
-        //}
+        let targets = hero.unit.getTargetsForAttack(props.healed,props.attacked,props.id,hero.id);
+        if (targets.every(hero => hero.unit.getId() !== props.id || hero.unit.unitHp.isDeath())) {
+          alert("You can't heal dead unit");
+        } else {
+          let healed = hero.unit.attackTargets(targets, props.id, hero.unit);
+          dispatch(updateQueue(healed));
+        }
       } else {
         alert("You can't attack your team!");
       }
     } else {
       if (hero.unit.getType() !== "Healer") {
-        let targets = hero.unit.getTargetsForAttack(
-          props.attacked,
-          props.healed,
-          props.id,
-          hero.id
-        );
+        let targets = hero.unit.getTargetsForAttack(props.attacked,props.healed,props.id,hero.id);
         if (targets.length) {
-          console.log(targets);
-          let attacked = hero.unit.attackTargets(targets, props.id, hero.unit);
-          //  if (attacked.length) {
-          dispatch(updateQueue(attacked));
-          // } else {
-          //   alert("You can't attack dead unit");
-          //}
+          if (targets.length > 6) {
+            alert("Choose different hero");
+          } else {
+            if (targets.every(hero => hero.unit.getId() !== props.id || hero.unit.unitHp.isDeath())) {
+              alert("You can't attack dead unit");
+            } else {
+              let attacked = hero.unit.attackTargets(targets,props.id,hero.unit);
+              if(props.healed.every(hero => hero.unit.unitHp.isDeath())){
+                alert("Attacker team won")
+              }
+              dispatch(updateQueue(attacked));
+            }
+          }
         } else {
           alert("You can't attack");
           dispatch(updateQueue([]));
         }
+
       } else {
         alert("You can't healed another team!");
       }

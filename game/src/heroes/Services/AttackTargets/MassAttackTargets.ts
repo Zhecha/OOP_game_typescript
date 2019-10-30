@@ -8,9 +8,6 @@ export default class MassAttackTargets implements IAttackTargets {
     attackedId: number,
     attacker: Unit
   ) {
-    // if (attacked.every(hero => hero.unit.getId() !== attackedId)) {
-    //   return [];
-    // }
 
     attacked.forEach(unit => {
       if (unit !== undefined) {
