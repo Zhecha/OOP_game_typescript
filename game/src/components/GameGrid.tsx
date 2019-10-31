@@ -10,15 +10,28 @@ const GameGrid: React.FC = () => {
   useEffect(() => {
     dispatch(getNewGameGrid());
   }, []);
+
+  let activeHero = useSelector((state: AppStore) => state.queue.queue)[0];
   let gameGrid = useSelector((state: AppStore) => state.gameGrid.gameGrid);
   let teamA = gameGrid.slice(0, 6);
   let teamB = gameGrid.slice(6);
+  if (activeHero.teamA) {
+    activeHero.unit.setTargets(teamA, teamB, activeHero.id);
+  } else {
+    activeHero.unit.setTargets(teamB, teamA, activeHero.id);
+  }
   return (
     <div className="grid-container">
       <div className="grid-content">
-        <Grid healed={teamA} attacked={teamB} />
+        <Grid
+          healed={teamA}
+          activeHero={activeHero}
+        />
         <hr className="grid-center-line" />
-        <Grid healed={teamB} attacked={teamA} />
+        <Grid
+          healed={teamB}
+          activeHero={activeHero}
+        />
       </div>
     </div>
   );

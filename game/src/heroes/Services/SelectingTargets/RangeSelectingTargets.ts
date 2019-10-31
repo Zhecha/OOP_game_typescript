@@ -5,17 +5,17 @@ export default class RangeSelectingTargets implements ISelectingTargets {
   getAttackTargets(
     attacker: UnitGameGridObjectType[],
     attacked: UnitGameGridObjectType[],
-    attackedId: number,
     attackerId: number
   ): UnitGameGridObjectType[] {
-    let fields: UnitGameGridObjectType[] = [];
+    
+    if (attacked.find(hero => hero.unit.getId() !== attackerId)) {
+      attacked.forEach(elem => {
+        if (!elem.unit.unitHp.isDeath()) {
+          elem.unit.setAttacked(true);
+        }
+      });
+    }
 
-    attacked.forEach(elem => {
-      if (!elem.unit.unitHp.isDeath()) {
-        fields.push(elem);
-      }
-    });
-
-    return fields;
+    return attacked;
   }
 }

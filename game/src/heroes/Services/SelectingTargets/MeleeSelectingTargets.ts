@@ -62,30 +62,29 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
   getAttackTargets(
     attacker: UnitGameGridObjectType[],
     attacked: UnitGameGridObjectType[],
-    attackedId: number,
     attackerId: number
   ): UnitGameGridObjectType[] {
-    let attackedLine = this.getLineToAttack(attacked, attackedId);
-    let position = this.getAttackerPosition(attacker, attackerId, attackedId);
+    let attackedLine = this.getLineToAttack(attacked, 1);
+    let position = this.getAttackerPosition(attacker, attackerId, 1);
     const isFirstLineAlive = this.isFistLineAlive(attacker, attackerId);
     if (!isFirstLineAlive) {
       position = position % 3;
     }
-    if (attackedLine.some(hero => hero.unit.getId() === attackedId) && position < 3) {
-      if (position === 0 && (attackedLine[0].unit.getId() === attackedId || attackedLine[1].unit.getId() === attackedId)) {
+    if (attackedLine.some(hero => hero.unit.getId() === 1) && position < 3) {
+      if (position === 0 && (attackedLine[0].unit.getId() === 1 || attackedLine[1].unit.getId() === 1)) {
         return [attackedLine[0], attackedLine[1]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if(position === 0 && attackedLine[2].unit.getId() === attackedId && attackedLine[0].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()) {
+      } else if(position === 0 && attackedLine[2].unit.getId() === 1 && attackedLine[0].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()) {
         return [attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 2 && (attackedLine[2].unit.getId() === attackedId || attackedLine[1].unit.getId() === attackedId)) {
+      } else if (position === 2 && (attackedLine[2].unit.getId() === 1 || attackedLine[1].unit.getId() === 1)) {
         return [attackedLine[1], attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 2 && attackedLine[0].unit.getId() === attackedId && attackedLine[2].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()){
+      } else if (position === 2 && attackedLine[0].unit.getId() === 1 && attackedLine[2].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()){
         return [attackedLine[0]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 1 && (attackedLine[2].unit.getId() === attackedId || attackedLine[1].unit.getId() === attackedId
-          || attackedLine[0].unit.getId() === attackedId)) {
+      } else if (position === 1 && (attackedLine[2].unit.getId() === 1 || attackedLine[1].unit.getId() === 1
+          || attackedLine[0].unit.getId() === 1)) {
         return attackedLine.filter(hero => !hero.unit.unitHp.isDeath());
       }
       return attacked.concat(attacker);
-    } else if (attackedLine.some(hero => hero.unit.getId() !== attackedId) && position < 3) {
+    } else if (attackedLine.some(hero => hero.unit.getId() !== 1) && position < 3) {
       return attacked.concat(attacker);
     } else {
       return [];

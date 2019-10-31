@@ -6,5 +6,5 @@ export default interface GridItemProps {
   unit: Unit;
   id: number;
   attacked: Array<UnitGameGridObjectType>;
-  healed: Array<UnitGameGridObjectType>;
+  attacker: UnitGameGridObjectType
 }

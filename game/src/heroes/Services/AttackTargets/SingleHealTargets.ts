@@ -16,6 +16,7 @@ export default class SingleHealTargets implements IAttackTargets {
           elem.unit.unitHp.getHp() + attacker.unitDamage.getDamage()
         );
       }
+      elem.unit.setAttacked(false);
     });
 
     return attacked.filter(hero => hero.unit.unitHp.isDeath());

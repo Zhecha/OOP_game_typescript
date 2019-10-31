@@ -5,17 +5,16 @@ export default class HealSelectingTargets implements ISelectingTargets {
   getAttackTargets(
     attacker: UnitGameGridObjectType[],
     attacked: UnitGameGridObjectType[],
-    attackedId: number,
     attackerId: number
   ): UnitGameGridObjectType[] {
-    let fields: UnitGameGridObjectType[] = [];
 
-    attacker.forEach(elem => {
-      if (!elem.unit.unitHp.isDeath()) {
-        fields.push(elem);
-      }
-    });
-
-    return fields;
+    if(attacker.find(hero => hero.unit.getId() === attackerId)){
+      attacker.forEach(elem => {
+        if (!elem.unit.unitHp.isDeath()) {
+          elem.unit.setAttacked(true);
+        }
+      });  
+    }
+    return attacker;
   }
 }

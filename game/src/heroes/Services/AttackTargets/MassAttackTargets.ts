@@ -14,6 +14,7 @@ export default class MassAttackTargets implements IAttackTargets {
         unit.unit.unitHp.setHp(
           unit.unit.unitHp.getHp() - attacker.unitDamage.getDamage()
         );
+        unit.unit.setAttacked(false);
       }
     });
 

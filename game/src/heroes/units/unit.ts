@@ -14,6 +14,7 @@ export default class Unit implements IWrapperDamage, IWrapperHp {
   active: boolean;
   targets: ISelectingTargets;
   attack: IAttackTargets;
+  attacked: boolean;
 
   constructor(
     id: number,
@@ -30,6 +31,15 @@ export default class Unit implements IWrapperDamage, IWrapperHp {
     this.active = false;
     this.targets = targets;
     this.attack = attack;
+    this.attacked = false;
+  }
+
+  isAttacked(): boolean {
+    return this.attacked;
+  }
+
+  setAttacked(attacked: boolean) {
+    this.attacked = attacked;
   }
 
   getId(): number {
@@ -52,16 +62,14 @@ export default class Unit implements IWrapperDamage, IWrapperHp {
     return this.type;
   }
 
-  getTargetsForAttack(
+  setTargets(
     attacker: UnitGameGridObjectType[],
     attacked: UnitGameGridObjectType[],
-    attackedId: number,
     attackerId: number
   ): UnitGameGridObjectType[] {
     return this.targets.getAttackTargets(
       attacker,
       attacked,
-      attackedId,
       attackerId
     );
   }
