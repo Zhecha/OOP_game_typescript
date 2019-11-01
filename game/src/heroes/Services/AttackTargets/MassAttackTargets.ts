@@ -10,7 +10,7 @@ export default class MassAttackTargets implements IAttackTargets {
   ) {
 
     attacked.forEach(unit => {
-      if (unit !== undefined) {
+      if (unit !== undefined && unit.unit.isAttacked()) {
         unit.unit.unitHp.setHp(
           unit.unit.unitHp.getHp() - attacker.unitDamage.getDamage()
         );

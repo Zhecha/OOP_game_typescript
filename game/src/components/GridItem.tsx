@@ -16,6 +16,9 @@ const GridItem: React.FC<Props> = props => {
     if (props.unit.isAttacked()) {
       const { unit } = props.attacker;
       let attacked = unit.attackTargets(props.attacked, props.id, unit);
+      if (props.attacked.every(hero => hero.unit.unitHp.isDeath())) {
+        alert("Attacker team won");
+      }
       dispatch(updateQueue(attacked));
     }
   };
@@ -24,7 +27,7 @@ const GridItem: React.FC<Props> = props => {
     <>
       <img
         src={props.PhotoUrl}
-        className={props.unit.isAttacked() ? "box-img-attacked" : "box-img"}
+        className={props.unit.isAttacked() ? "box-img-attacked" : props.unit.getActive() ? "box-active-hero" : "box-img"}
         alt="HeroObject"
         onClick={() => userLogic()}
       />
@@ -34,9 +37,6 @@ const GridItem: React.FC<Props> = props => {
         max={props.unit.unitHp.getFullHp()}
         value={props.unit.unitHp.getHp()}
       />
-      {props.unit.getActive() ? (
-        <div className="box-active-hero">Active</div>
-      ) : null}
     </>
   );
 };

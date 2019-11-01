@@ -4,9 +4,9 @@ import { UnitGameGridObjectType } from "../../../redux/constants/GameGridConstan
 export default class MeleeSelectingTargets implements ISelectingTargets {
   private getLineToAttack(
     attacked: UnitGameGridObjectType[],
-    attackedId: number
+    attackerId: number
   ): UnitGameGridObjectType[] {
-    if (attackedId % 2 !== 0) {
+    if (attackerId % 2 === 0) {
       let line = attacked.slice(3).concat(attacked.slice(0, 3));
       let line1 = line.slice(0, 3);
       let line2 = line.slice(3);
@@ -28,10 +28,9 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
 
   private getAttackerPosition(
     attacker: UnitGameGridObjectType[],
-    attackerId: number,
-    attackedId: number
+    attackerId: number
   ): number {
-    if (attackedId % 2 !== 0) {
+    if (attackerId % 2 === 0) {
       return attacker.findIndex(hero => hero.unit.getId() === attackerId);
     } else {
       let line1 = attacker.slice(3).concat(attacker.slice(0, 3));
@@ -64,28 +63,26 @@ export default class MeleeSelectingTargets implements ISelectingTargets {
     attacked: UnitGameGridObjectType[],
     attackerId: number
   ): UnitGameGridObjectType[] {
-    let attackedLine = this.getLineToAttack(attacked, 1);
-    let position = this.getAttackerPosition(attacker, attackerId, 1);
+    let attackedLine = this.getLineToAttack(attacked, attackerId);
+    let position = this.getAttackerPosition(attacker, attackerId);
     const isFirstLineAlive = this.isFistLineAlive(attacker, attackerId);
     if (!isFirstLineAlive) {
       position = position % 3;
     }
-    if (attackedLine.some(hero => hero.unit.getId() === 1) && position < 3) {
-      if (position === 0 && (attackedLine[0].unit.getId() === 1 || attackedLine[1].unit.getId() === 1)) {
-        return [attackedLine[0], attackedLine[1]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if(position === 0 && attackedLine[2].unit.getId() === 1 && attackedLine[0].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()) {
-        return [attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 2 && (attackedLine[2].unit.getId() === 1 || attackedLine[1].unit.getId() === 1)) {
-        return [attackedLine[1], attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 2 && attackedLine[0].unit.getId() === 1 && attackedLine[2].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()){
-        return [attackedLine[0]].filter(hero => !hero.unit.unitHp.isDeath());
-      } else if (position === 1 && (attackedLine[2].unit.getId() === 1 || attackedLine[1].unit.getId() === 1
-          || attackedLine[0].unit.getId() === 1)) {
-        return attackedLine.filter(hero => !hero.unit.unitHp.isDeath());
+    if (attackedLine.some(hero => !hero.unit.unitHp.isDeath()) && position < 3) {
+      if (position === 0 && (!attackedLine[0].unit.unitHp.isDeath() || !attackedLine[1].unit.unitHp.isDeath())) {
+        return [attackedLine[0], attackedLine[1]].filter(hero => !hero.unit.unitHp.isDeath()).map(hero => {hero.unit.setAttacked(true); return hero}); 
+      } else if(position === 0 && !attackedLine[2].unit.unitHp.isDeath() && attackedLine[0].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()) {
+        return [attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath()).map(hero => {hero.unit.setAttacked(true); return hero}); 
+      } else if (position === 2 && (!attackedLine[2].unit.unitHp.isDeath() || !attackedLine[1].unit.unitHp.isDeath())) {
+        return [attackedLine[1], attackedLine[2]].filter(hero => !hero.unit.unitHp.isDeath()).map(hero => {hero.unit.setAttacked(true); return hero});
+      } else if (position === 2 && !attackedLine[0].unit.unitHp.isDeath() && attackedLine[2].unit.unitHp.isDeath() && attackedLine[1].unit.unitHp.isDeath()){
+        return [attackedLine[0]].filter(hero => !hero.unit.unitHp.isDeath()).map(hero => {hero.unit.setAttacked(true); return hero}); 
+      } else if (position === 1 && (!attackedLine[2].unit.unitHp.isDeath() || !attackedLine[1].unit.unitHp.isDeath()
+          || !attackedLine[0].unit.unitHp.isDeath())) {
+        return attackedLine.filter(hero => !hero.unit.unitHp.isDeath()).map(hero => {hero.unit.setAttacked(true); return hero}); 
       }
-      return attacked.concat(attacker);
-    } else if (attackedLine.some(hero => hero.unit.getId() !== 1) && position < 3) {
-      return attacked.concat(attacker);
+      return [];
     } else {
       return [];
     }
