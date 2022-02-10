@@ -11,7 +11,7 @@
     "@types/redux": "^3.6.0",
     "compass": "^0.1.1",
     "less": "^3.10.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-redux": "^7.1.1",
